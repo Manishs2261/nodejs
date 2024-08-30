@@ -11,7 +11,7 @@ const myServer = http.createServer((req , res)=>{
     console.log(myUrl);
     fs.appendFile("log.txt",log,(err,data)=>{
        
-        switch(req.url){
+        switch(myUrl.pathname){
 
             case "/":
                 res.end("Home");
