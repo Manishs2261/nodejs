@@ -1,6 +1,26 @@
-const math = require("./math");
+// const math = require("./math");
+const express = require("express");
+const userRouter = require("./routes/user");
+const {connnectionMongoDb} = require('./connection');
+const {logReqRes} = require("./middleware");
+ 
 
-console.log("Hwllo word");
-// console.log(math(5,5));
-console.log(math.aadd(4,8));
-console.log(math.ssub(8,4));
+
+
+const app = express();
+const PORT = 8000;
+
+
+//connections
+connnectionMongoDb("mongodb://127.0.0.1:27017/demoLearn").then(()=> console.log("MongoDb connected"));
+
+
+//Middleware
+app.use(express.urlencoded({ extended: false }));
+
+app.use(logReqRes("log.txt"));
+
+//routers 
+app.use("/api/users",userRouter);
+
+app.listen(PORT, () => console.log('Server started at Port'));
